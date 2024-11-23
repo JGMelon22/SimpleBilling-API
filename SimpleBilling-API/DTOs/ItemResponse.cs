@@ -1,6 +1,6 @@
 namespace SimpleBilling_API.DTOs;
 
-public record Item
+public record ItemResponse
 {
     public int Id { get; init; }
     public string Name { get; init; } = string.Empty;
