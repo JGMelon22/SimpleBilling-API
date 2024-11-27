@@ -1,7 +1,9 @@
 using FluentValidation;
 using SimpleBilling_API.DTOs;
 using SimpleBilling_API.Infrastructure.Data;
+using SimpleBilling_API.Infrastructure.Repository;
 using SimpleBilling_API.Infrastructure.Validators;
+using SimpleBilling_API.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument();
 
 builder.Services.AddSingleton<DapperDbContext>();
+
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
 builder.Services.AddTransient<IValidator<ItemRequest>, ItemValidator>();
 
