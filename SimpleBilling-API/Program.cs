@@ -1,4 +1,5 @@
 using FluentValidation;
+using Serilog;
 using SimpleBilling_API.DTOs;
 using SimpleBilling_API.Infrastructure.Data;
 using SimpleBilling_API.Infrastructure.Repository;
@@ -20,6 +21,9 @@ builder.Services.AddSingleton<DapperDbContext>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
 builder.Services.AddTransient<IValidator<ItemRequest>, ItemValidator>();
+
+builder.Host.UseSerilog((context, config) =>
+    config.ReadFrom.Configuration(context.Configuration));
 
 builder.Host.UseWolverine(opts =>
 {

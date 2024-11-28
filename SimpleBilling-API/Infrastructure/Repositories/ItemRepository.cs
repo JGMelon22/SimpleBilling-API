@@ -1,4 +1,5 @@
 using System.Data;
+using System.Reflection;
 using Dapper;
 using SimpleBilling_API.DTOs;
 using SimpleBilling_API.Infrastructure.Data;
@@ -11,10 +12,12 @@ namespace SimpleBilling_API.Infrastructure.Repository;
 public class ItemRepository : IItemRepository
 {
     private readonly DapperDbContext _context;
+    private readonly ILogger<ItemRepository> _logger;
 
-    public ItemRepository(DapperDbContext context)
+    public ItemRepository(DapperDbContext context, ILogger<ItemRepository> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<ServiceResponse<int>> AddItemAsync(ItemRequest newItem)
@@ -28,10 +31,14 @@ public class ItemRepository : IItemRepository
 
         try
         {
+            string methodNameLog = $"[{GetType().Name} -> {MethodBase.GetCurrentMethod()!.ReflectedType!.Name}]";
+
             using (IDbConnection connection = _context.CreateConnection())
             {
                 Item item = ItemMapper.ItemRequestToItem(newItem);
                 int itemResult = await connection.ExecuteAsync(sql, item);
+
+                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(item), item);
 
                 if (itemResult == 0)
                     throw new Exception("An error ocurred while inserting a new item.");
@@ -41,6 +48,8 @@ public class ItemRepository : IItemRepository
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "An error ocurred in {MethodName}: {Message}", $"{GetType().Name} -> {MethodBase.GetCurrentMethod()?.Name}", ex.Message);
+
             serviceResponse.Success = false;
             serviceResponse.Message = ex.Message;
         }
@@ -62,16 +71,22 @@ public class ItemRepository : IItemRepository
 
         try
         {
+            string methodNameLog = $"[{GetType().Name} -> {MethodBase.GetCurrentMethod()!.ReflectedType!.Name}]";
+
             using (IDbConnection connection = _context.CreateConnection())
             {
                 IEnumerable<Item> items = await connection.QueryAsync<Item>(sql);
                 ICollection<ItemResponse> itemsResponse = items.Select(x => ItemMapper.ItemToItemResponse(x)).ToList();
+
+                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(items), items);
 
                 serviceResponse.Data = itemsResponse;
             }
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "An error ocurred in {MethodName}: {Message}", $"{GetType().Name} -> {MethodBase.GetCurrentMethod()?.Name}", ex.Message);
+
             serviceResponse.Success = false;
             serviceResponse.Message = ex.Message;
         }
@@ -94,17 +109,23 @@ public class ItemRepository : IItemRepository
 
         try
         {
+            string methodNameLog = $"[{GetType().Name} -> {MethodBase.GetCurrentMethod()!.ReflectedType!.Name}]";
+
             using (IDbConnection connection = _context.CreateConnection())
             {
                 Item? item = await connection.QueryFirstOrDefaultAsync<Item>(sql, new { Id = id });
                 Item itemResponse = item
                     ?? throw new Exception($"Item with id {id} not found!");
 
+                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(item), item);
+
                 serviceResponse.Data = ItemMapper.ItemToItemResponse(itemResponse);
             }
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "An error ocurred in {MethodName}: {Message}", $"{GetType().Name} -> {MethodBase.GetCurrentMethod()?.Name}", ex.Message);
+
             serviceResponse.Success = false;
             serviceResponse.Message = ex.Message;
         }
@@ -123,9 +144,13 @@ public class ItemRepository : IItemRepository
 
         try
         {
+            string methodNameLog = $"[{GetType().Name} -> {MethodBase.GetCurrentMethod()!.ReflectedType!.Name}]";
+
             using (IDbConnection connection = _context.CreateConnection())
             {
                 int itemResult = await connection.ExecuteAsync(sql, new { Id = id });
+
+                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(itemResult), itemResult);
 
                 if (itemResult == 0)
                     throw new Exception($"Video Game with id {id} not found!");
@@ -133,6 +158,8 @@ public class ItemRepository : IItemRepository
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "An error ocurred in {MethodName}: {Message}", $"{GetType().Name} -> {MethodBase.GetCurrentMethod()?.Name}", ex.Message);
+
             serviceResponse.Success = false;
             serviceResponse.Message = ex.Message;
         }
@@ -154,10 +181,14 @@ public class ItemRepository : IItemRepository
 
         try
         {
+            string methodNameLog = $"[{GetType().Name} -> {MethodBase.GetCurrentMethod()!.ReflectedType!.Name}]";
+
             using (IDbConnection connection = _context.CreateConnection())
             {
                 Item item = ItemMapper.ItemRequestToItem(updatedItem);
                 item.Id = id;
+
+                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(item), item);
 
                 int itemResult = await connection.ExecuteAsync(sql, item);
 
@@ -169,6 +200,8 @@ public class ItemRepository : IItemRepository
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "An error ocurred in {MethodName}: {Message}", $"{GetType().Name} -> {MethodBase.GetCurrentMethod()?.Name}", ex.Message);
+
             serviceResponse.Success = false;
             serviceResponse.Message = ex.Message;
         }
