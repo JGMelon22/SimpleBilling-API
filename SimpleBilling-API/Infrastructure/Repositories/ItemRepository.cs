@@ -38,7 +38,7 @@ public class ItemRepository : IItemRepository
                 Item item = ItemMapper.ItemRequestToItem(newItem);
                 int itemResult = await connection.ExecuteAsync(sql, item);
 
-                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(item), item);
+                _logger.LogInformation("{MethodName} {ObjectNameName}: {item}", methodNameLog, nameof(item), item);
 
                 if (itemResult == 0)
                     throw new Exception("An error ocurred while inserting a new item.");
@@ -78,7 +78,7 @@ public class ItemRepository : IItemRepository
                 IEnumerable<Item> items = await connection.QueryAsync<Item>(sql);
                 ICollection<ItemResponse> itemsResponse = items.Select(x => ItemMapper.ItemToItemResponse(x)).ToList();
 
-                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(items), items);
+                _logger.LogInformation("{MethodName} {ObjectNameName}: {items}", methodNameLog, nameof(items), items);
 
                 serviceResponse.Data = itemsResponse;
             }
@@ -117,7 +117,7 @@ public class ItemRepository : IItemRepository
                 Item itemResponse = item
                     ?? throw new Exception($"Item with id {id} not found!");
 
-                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(item), item);
+                _logger.LogInformation("{MethodName} {ObjectNameName}: {item}", methodNameLog, nameof(item), item);
 
                 serviceResponse.Data = ItemMapper.ItemToItemResponse(itemResponse);
             }
@@ -150,7 +150,7 @@ public class ItemRepository : IItemRepository
             {
                 int itemResult = await connection.ExecuteAsync(sql, new { Id = id });
 
-                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(itemResult), itemResult);
+                _logger.LogInformation("{MethodName} {ObjectNameName}: {itemResult}", methodNameLog, nameof(itemResult), itemResult);
 
                 if (itemResult == 0)
                     throw new Exception($"Video Game with id {id} not found!");
@@ -188,7 +188,7 @@ public class ItemRepository : IItemRepository
                 Item item = ItemMapper.ItemRequestToItem(updatedItem);
                 item.Id = id;
 
-                _logger.LogInformation("{MethodName} {ObjectNameName}: ", methodNameLog, nameof(item), item);
+                _logger.LogInformation("{MethodName} {ObjectNameName}: {@technology} ", methodNameLog, nameof(item), item);
 
                 int itemResult = await connection.ExecuteAsync(sql, item);
 
