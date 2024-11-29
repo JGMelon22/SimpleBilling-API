@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleBilling-API", "SimpleBilling-API\SimpleBilling-API.csproj", "{86A782A8-90CF-4837-8217-9B2AC4D71C4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleBilling-API.Tests", "SimpleBilling-API.Tests\SimpleBilling-API.Tests.csproj", "{F9DF3BBA-122E-42B8-BC9D-F46B062BA89D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{86A782A8-90CF-4837-8217-9B2AC4D71C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86A782A8-90CF-4837-8217-9B2AC4D71C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86A782A8-90CF-4837-8217-9B2AC4D71C4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9DF3BBA-122E-42B8-BC9D-F46B062BA89D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9DF3BBA-122E-42B8-BC9D-F46B062BA89D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9DF3BBA-122E-42B8-BC9D-F46B062BA89D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9DF3BBA-122E-42B8-BC9D-F46B062BA89D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
