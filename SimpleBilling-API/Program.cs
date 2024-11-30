@@ -14,7 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument();
+builder.Services.AddOpenApiDocument(options =>
+{
+    options.Version = "v1";
+    options.Title = "SimpleBilling-API";
+    options.Description = "A Simple Web API simulating a billing system.";
+});
 
 builder.Services.AddSingleton<DapperDbContext>();
 
