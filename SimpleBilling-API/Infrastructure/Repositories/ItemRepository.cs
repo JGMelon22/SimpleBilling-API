@@ -33,7 +33,7 @@ public class ItemRepository : IItemRepository
         {
             string methodNameLog = $"[{GetType().Name} -> {MethodBase.GetCurrentMethod()!.ReflectedType!.Name}]";
 
-            using (IDbConnection connection = _context.CreateConnection())
+            using (IDbConnection? connection = _context.CreateConnection())
             {
                 Item item = ItemMapper.ItemRequestToItem(newItem);
                 int itemResult = await connection.ExecuteAsync(sql, item);
