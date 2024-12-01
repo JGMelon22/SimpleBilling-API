@@ -49,6 +49,8 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetItemByIdAsync([FromRoute] int id)
     {
         ServiceResponse<ItemResponse> items = await _messageBus.InvokeAsync<ServiceResponse<ItemResponse>>(new GetItemByIdQuery(id));
@@ -58,6 +60,8 @@ public class ItemsController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateItemAsync([FromRoute] int id, [FromBody] ItemRequest updatedItem)
     {
         ValidationResult validationResult = await _validator.ValidateAsync(updatedItem);
@@ -72,6 +76,8 @@ public class ItemsController : ControllerBase
 
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RemoveItemAsync([FromRoute] int id)
     {
         ServiceResponse<int> item = await _messageBus.InvokeAsync<ServiceResponse<int>>(new RemoveItemCommand(id));
