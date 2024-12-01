@@ -61,7 +61,7 @@ public class ItemRepository : IItemRepository
     {
         ServiceResponse<ICollection<ItemResponse>> serviceResponse = new();
         string sql = """
-                    SELECT items AS Items,
+                    SELECT id AS Id,
                            name AS Name,
                            manufacturer AS Manufacturer,
                            price AS Price,
