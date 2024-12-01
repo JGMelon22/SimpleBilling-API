@@ -35,6 +35,19 @@ Implemented using CQRS, Repository Pattern and the By Technical Architecture. <b
     </li>
 </ul>
 
+<table style="width: 100%; text-align: center; border-spacing: 20px;">
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 10px;">
+      <img src="https://github.com/user-attachments/assets/1f627501-113c-4b8f-b565-bec4af9ce51b" alt="Zed Editor" width="870">
+    </td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 10px;">
+      <img src="https://github.com/user-attachments/assets/6b96d3bc-addb-423f-a399-47b065556ea4" alt="Swagger UI" width="870">
+    </td>
+  </tr>
+</table>
+
 <h3>References 📚</h3>
 <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-nswag?view=aspnetcore-8.0&tabs=visual-studio">Get started with NSwag and ASP.NET Core</a><br/>
 <a href="https://wolverinefx.net/guide/durability/marten/event-sourcing.html">Aggregate Handlers and Event Sourcing</a><br/>
