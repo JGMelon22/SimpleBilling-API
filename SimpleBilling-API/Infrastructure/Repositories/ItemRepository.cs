@@ -176,7 +176,7 @@ public class ItemRepository : IItemRepository
         return serviceResponse;
     }
 
-    public async Task<ServiceResponse<ItemResponse>> GetItemByIdAsync(string name)
+    public async Task<ServiceResponse<ItemResponse>> GetItemByNameAsync(string name)
     {
         ServiceResponse<ItemResponse> serviceResponse = new();
         string sql = """

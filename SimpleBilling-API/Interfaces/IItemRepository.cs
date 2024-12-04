@@ -8,7 +8,7 @@ public interface IItemRepository
     Task<ServiceResponse<ICollection<ItemResponse>>> GetAllItemsAsync();
     Task<ServiceResponse<ICollection<ItemResponse>>> GetCartsItemsByNames(ICollection<CartItem> cartItems);
     Task<ServiceResponse<ItemResponse>> GetItemByIdAsync(int id);
-    Task<ServiceResponse<ItemResponse>> GetItemByIdAsync(string name);
+    Task<ServiceResponse<ItemResponse>> GetItemByNameAsync(string name);
     Task<ServiceResponse<int>> AddItemAsync(ItemRequest newItem);
     Task<ServiceResponse<int>> UpdateItemAsync(int id, ItemRequest updatedItem);
     Task<ServiceResponse<int>> RemoveItemAsync(int id);
