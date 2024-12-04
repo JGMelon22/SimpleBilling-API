@@ -94,7 +94,7 @@ public class ItemRepository : IItemRepository
         return serviceResponse;
     }
 
-    public async Task<ServiceResponse<ICollection<ItemResponse>>> GetCartsItemsByNames(ICollection<CartItem> cartItems)
+    public async Task<ServiceResponse<ICollection<ItemResponse>>> GetCartsItemsByNamesAsync(ICollection<CartItem> cartItems)
     {
         ServiceResponse<ICollection<ItemResponse>> serviceResponse = new();
 
