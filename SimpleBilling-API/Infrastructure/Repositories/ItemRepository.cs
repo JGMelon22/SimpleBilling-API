@@ -94,6 +94,49 @@ public class ItemRepository : IItemRepository
         return serviceResponse;
     }
 
+    public async Task<ServiceResponse<ICollection<ItemResponse>>> GetCartsItemsByNames(ICollection<CartItem> cartItems)
+    {
+        ServiceResponse<ICollection<ItemResponse>> serviceResponse = new();
+
+        try
+        {
+
+            string methodNameLog = $"[{GetType().Name} -> {MethodBase.GetCurrentMethod()!.ReflectedType!.Name}]";
+
+            ICollection<string>? names = cartItems
+                .Select(cartItem => cartItem.Name)
+                .ToList();
+
+            string sql = """
+                    SELECT id AS Id,
+                           name AS Name,
+                           manufacturer AS Manufacturer,
+                           price AS Price,
+                           discount AS Discount
+                    FROM items
+                    WHERE names IN @Names
+                    """;
+
+            using (IDbConnection connection = _context.CreateConnection())
+            {
+                IEnumerable<Item> itemsInCart = await connection.QueryAsync<Item>(sql, new { Names = names });
+                ICollection<ItemResponse>? itemsInCartResult = itemsInCart.Select(x => ItemMapper.ItemToItemResponse(x)).ToList();
+
+                _logger.LogInformation("{MethodName} {ObjectNameName}: {items}", methodNameLog, nameof(itemsInCart), itemsInCart);
+
+                serviceResponse.Data = itemsInCartResult;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            serviceResponse.Success = false;
+            serviceResponse.Message = ex.Message;
+        }
+
+        return serviceResponse;
+    }
+
     public async Task<ServiceResponse<ItemResponse>> GetItemByIdAsync(int id)
     {
         ServiceResponse<ItemResponse> serviceResponse = new();
@@ -116,6 +159,45 @@ public class ItemRepository : IItemRepository
                 Item? item = await connection.QueryFirstOrDefaultAsync<Item>(sql, new { Id = id });
                 Item itemResponse = item
                     ?? throw new Exception($"Item with id {id} not found!");
+
+                _logger.LogInformation("{MethodName} {ObjectNameName}: {item}", methodNameLog, nameof(item), item);
+
+                serviceResponse.Data = ItemMapper.ItemToItemResponse(itemResponse);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error ocurred in {MethodName}: {Message}", $"{GetType().Name} -> {MethodBase.GetCurrentMethod()?.Name}", ex.Message);
+
+            serviceResponse.Success = false;
+            serviceResponse.Message = ex.Message;
+        }
+
+        return serviceResponse;
+    }
+
+    public async Task<ServiceResponse<ItemResponse>> GetItemByIdAsync(string name)
+    {
+        ServiceResponse<ItemResponse> serviceResponse = new();
+        string sql = """
+                    SELECT id AS Id,
+                           name AS Name,
+                           manufacturer AS Manufacturer,
+                           price AS Price,
+                           discount AS Discount
+                    FROM items
+                    WHERE name = @Name;
+                    """;
+
+        try
+        {
+            string methodNameLog = $"[{GetType().Name} -> {MethodBase.GetCurrentMethod()!.ReflectedType!.Name}]";
+
+            using (IDbConnection connection = _context.CreateConnection())
+            {
+                Item? item = await connection.QueryFirstOrDefaultAsync<Item>(sql, new { Name = name });
+                Item itemResponse = item
+                    ?? throw new Exception($"Item with name {name} not found!");
 
                 _logger.LogInformation("{MethodName} {ObjectNameName}: {item}", methodNameLog, nameof(item), item);
 
