@@ -73,18 +73,36 @@ public class ItemsController : ControllerBase
     }
 
     /// <summary>
-    /// Search and return a single Item
+    /// Search and return a single Item by id
     /// </summary>
     /// <param name="id"></param>
     /// <returns>A single Item</returns>
     /// <response code="200">Returns the found item.</response>
     /// <response code="404">If item with provided id not found.</response>
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetItemByIdAsync([FromRoute] int id)
     {
         ServiceResponse<ItemResponse> items = await _messageBus.InvokeAsync<ServiceResponse<ItemResponse>>(new GetItemByIdQuery(id));
+        return items.Data != null
+            ? Ok(items)
+            : NotFound();
+    }
+
+    /// <summary>
+    /// Search and return a single Item by name
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns>A single Item</returns>
+    /// <response code="200">Returns the found item.</response>
+    /// <response code="404">If item with provided id not found.</response>
+    [HttpGet("{name:alpha}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetItemByNameAsync([FromRoute] string name)
+    {
+        ServiceResponse<ItemResponse> items = await _messageBus.InvokeAsync<ServiceResponse<ItemResponse>>(new GetItemByNameQuery(name));
         return items.Data != null
             ? Ok(items)
             : NotFound();
