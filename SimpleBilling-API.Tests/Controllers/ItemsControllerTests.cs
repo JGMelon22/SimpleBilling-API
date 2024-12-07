@@ -143,7 +143,7 @@ public class ItemsControllerTests
         // Arrange
         Mock<IValidator<ItemRequest>> validator = new();
         Mock<IMessageBus> messageBus = new();
-        ValidationResult validationResult = new();
+        // remover - ValidationResult validationResult = new();
         ItemsController controller = new(validator.Object, messageBus.Object);
         ItemResponse item = new()
         {
@@ -258,6 +258,51 @@ public class ItemsControllerTests
 
         messageBus.Verify(x => x.InvokeAsync<ServiceResponse<int>>(
             It.Is<RemoveItemCommand>(cmd => cmd.Id == 1),
+            It.IsAny<CancellationToken>(),
+            default), Times.Once);
+    }
+
+    [Fact]
+    public async Task Should_OkResult_When_ItemNameIsFound()
+    {
+        // Arrange
+        Mock<IValidator<ItemRequest>> validator = new();
+        Mock<IMessageBus> messageBus = new();
+        ItemsController controller = new(validator.Object, messageBus.Object);
+        ItemResponse item = new()
+        {
+            Id = 1,
+            Name = "iPhone X",
+            Manufacturer = "Apple",
+            Price = 699.00M,
+            Discount = 20
+        };
+
+        ServiceResponse<ItemResponse> serviceResponse = new()
+        {
+            Data = item,
+            Message = string.Empty,
+            Success = true
+        };
+
+        messageBus
+            .Setup(x => x.InvokeAsync<ServiceResponse<ItemResponse>>(
+                It.IsAny<GetItemByNameQuery>(),
+                It.IsAny<CancellationToken>(),
+                default
+            ))
+            .ReturnsAsync(serviceResponse); ;
+
+        // Act
+        IActionResult result = await controller.GetItemByNameAsync("iPhone X");
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Should().BeOfType<OkObjectResult>();
+        serviceResponse.Data.Should().BeEquivalentTo(item);
+
+        messageBus.Verify(x => x.InvokeAsync<ServiceResponse<ItemResponse>>(
+            It.IsAny<GetItemByNameQuery>(),
             It.IsAny<CancellationToken>(),
             default), Times.Once);
     }
