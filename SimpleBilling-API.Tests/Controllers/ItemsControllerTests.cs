@@ -63,7 +63,6 @@ public class ItemsControllerTests
         // Arrange
         Mock<IValidator<ItemRequest>> validator = new();
         Mock<IMessageBus> messageBus = new();
-        ValidationResult validationResult = new();
         ItemsController controller = new(validator.Object, messageBus.Object);
         ICollection<ItemResponse> items =
         [
@@ -143,7 +142,6 @@ public class ItemsControllerTests
         // Arrange
         Mock<IValidator<ItemRequest>> validator = new();
         Mock<IMessageBus> messageBus = new();
-        // remover - ValidationResult validationResult = new();
         ItemsController controller = new(validator.Object, messageBus.Object);
         ItemResponse item = new()
         {
@@ -231,7 +229,6 @@ public class ItemsControllerTests
         // Arrange
         Mock<IValidator<ItemRequest>> validator = new();
         Mock<IMessageBus> messageBus = new();
-        ValidationResult validationResult = new();
         ItemsController controller = new(validator.Object, messageBus.Object);
 
         ServiceResponse<int> serviceResponse = new()
