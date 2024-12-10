@@ -13,19 +13,19 @@ public class ItemValidator : AbstractValidator<ItemRequest>
             .NotNull()
             .WithMessage("Item Name can not be null!")
             .MinimumLength(2)
-            .WithMessage("Item Name can must be at least 2 characters!")
+            .WithMessage("Item Name must be at least 2 characters!")
             .MaximumLength(100)
             .WithMessage("Item Name can not exceed 100 characters!");
 
         RuleFor(x => x.Manufacturer)
             .NotEmpty()
-            .WithMessage("Item Manufacturer Country can not be empty!")
+            .WithMessage("Item Manufacturer can not be empty!")
             .NotNull()
-            .WithMessage("Item Manufacturer Country can not be null!")
+            .WithMessage("Item Manufacturer can not be null!")
             .MinimumLength(4)
-            .WithMessage("Item Name can must be at least 4 characters!")
+            .WithMessage("Item Manufacturer must be at least 4 characters!")
             .MaximumLength(60)
-            .WithMessage("Item Name can not exceed 60 characters!");
+            .WithMessage("Item Manufacturer can not exceed 60 characters!");
 
         RuleFor(x => x.Price)
             .NotEmpty()
