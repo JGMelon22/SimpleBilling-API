@@ -6,11 +6,10 @@ using SimpleBilling_API.Infrastructure.Repository;
 using SimpleBilling_API.Infrastructure.Validators;
 using SimpleBilling_API.Interfaces;
 using Wolverine;
-
-using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,40 +33,38 @@ builder.Services.AddTransient<IValidator<ItemRequest>, ItemValidator>();
 
 # region [Otel Setup]
 
-builder.Services.AddOpenTelemetry()
-    .ConfigureResources(resources => resources.AddService("SimpleBilling-API"))
-        .WithMetrics(metrics =>
+builder.Services.AddOpenTelemetry().WithMetrics((options) =>
+{
+    options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("SimpleBilling-API"))
+            .AddHttpClientInstrumentation()
+            .AddRuntimeInstrumentation()
+            // .AddConsoleExporter()
+            .AddOtlpExporter(otel =>
+            {
+                otel.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                otel.Endpoint = new Uri(builder.Configuration["OtlpExporter:Endpoint"]!);
+            });
+});
+
+builder.Services.AddOpenTelemetry().WithTracing((options) =>
+{
+    options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("SimpleBilling-API"))
+        .AddHttpClientInstrumentation()
+        // .AddConsoleExporter()
+        .AddOtlpExporter(otel =>
         {
-            metrics
-                .AddAspNetCoreInstrumentation()
-                .AddHttpClientInstrumentation()
-                .AddRuntimeInstrumentation()
-                .AddOltpExporter(options =>
-                {
-                    options.Protocol = OtlpExportProtocol.Grpc;
-                    options.Endpoint = new Uri(builder.Configuration["OtlpExporter:Endpoint"]!);
-                });
-        })
-        .WithTracing(tracing =>
-        {
-            tracing
-                .AddAspNetCoreI
-                .AddHttpClientInstrumentation()
-                .AddOtlpExporter(options =>
-                {
-                    options.options.Protocol = OtlpExportProtocol.Grpc;
-                    options.Endpoint = new Uri(builder.Configuration["OtlpExporter:Endpoint"]!);
-                });
+            otel.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+            otel.Endpoint = new Uri(builder.Configuration["OtlpExporter:Endpoint"]!);
         });
+});
 
-
-builder.Logging.ClearProviders();
 builder.Logging.AddOpenTelemetry(options =>
 {
-    options.AddOtlpExporter(exporter =>
+    options.IncludeScopes = true;
+    options.AddConsoleExporter()
+    .AddOtlpExporter(otel =>
     {
-        exporter.Protocol = OtlpExportProtocol.Grpc;
-        exporter.Endpoint = new Uri(builder.Configuration["OtlpExporter:Endpoint"]!);
+        otel.Endpoint = new Uri(builder.Configuration["OtlpExporter:Endpoint"]!);
     });
 });
 
