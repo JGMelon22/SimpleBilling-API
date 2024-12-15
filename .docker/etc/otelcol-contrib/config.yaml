@@ -1,0 +1,22 @@
+receivers:
+  oltp:
+    protocols:
+      grpc:
+        endpoint: otel-collector:4317
+
+exporters:
+  prometheus:
+    endpoint: otel-collector:8889
+  oltp:
+    endpoint: jager:4317
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    metrics:
+      receivers: [oltp]
+      exporters: [prometheus]
+    traces:
+      receivers: [oltp]
+      exporters: [oltp]
