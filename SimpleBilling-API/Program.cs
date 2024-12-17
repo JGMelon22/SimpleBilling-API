@@ -36,6 +36,7 @@ builder.Services.AddTransient<IValidator<ItemRequest>, ItemValidator>();
 builder.Services.AddOpenTelemetry().WithMetrics((options) =>
 {
     options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("SimpleBilling-API"))
+            .AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation()
             .AddRuntimeInstrumentation()
             // .AddConsoleExporter()
@@ -49,6 +50,7 @@ builder.Services.AddOpenTelemetry().WithMetrics((options) =>
 builder.Services.AddOpenTelemetry().WithTracing((options) =>
 {
     options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("SimpleBilling-API"))
+        .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
         // .AddConsoleExporter()
         .AddOtlpExporter(otel =>
