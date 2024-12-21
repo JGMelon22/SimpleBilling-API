@@ -50,3 +50,15 @@ services:
       - 16686:16686
       - 14268
       - 14250
+
+  dcs-postgres:
+    image: postgres:17.2-alpine3.21
+    container_name: dcs-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: Melon@123
+      POSTGRES_USER: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
