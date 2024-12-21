@@ -11,8 +11,8 @@ public class ItemValidatorTests
     public async Task Should_BeValid_WhenItemRequestIsCorrectltInformmed()
     {
         // Arrange
-        ItemRequest item = new ItemRequest("Boeing 747", "Boeing", 99_999.0M, 12);
-        ItemValidator validator = new ItemValidator();
+        ItemRequest item = new("Boeing 747", "Boeing", 99_999.0M, 12);
+        ItemValidator validator = new();
 
         // Act
         ValidationResult result = await validator.ValidateAsync(item);
@@ -25,8 +25,8 @@ public class ItemValidatorTests
     public async Task Should_BeInvalid_WhenItemRequestHasNoNameNorBrand()
     {
         // Arrange
-        ItemRequest item = new ItemRequest(string.Empty, string.Empty, 99_999.0M, 12);
-        ItemValidator validator = new ItemValidator();
+        ItemRequest item = new(string.Empty, string.Empty, 99_999.0M, 12);
+        ItemValidator validator = new();
 
         // Act
         ValidationResult result = await validator.ValidateAsync(item);
@@ -41,8 +41,8 @@ public class ItemValidatorTests
     public async Task Should_BeInvalid_WhenItemRequestDiscountIsEqualToZeroAndPriceEqualsToZero()
     {
         // Arrange
-        ItemRequest item = new ItemRequest("Airbus A350 XWB", "Airbus", 0.0M, 5);
-        ItemValidator validator = new ItemValidator();
+        ItemRequest item = new("Airbus A350 XWB", "Airbus", 0.0M, 5);
+        ItemValidator validator = new();
 
         // Act
         ValidationResult result = await validator.ValidateAsync(item);

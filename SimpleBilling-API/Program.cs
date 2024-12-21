@@ -6,10 +6,6 @@ using SimpleBilling_API.Infrastructure.Repository;
 using SimpleBilling_API.Infrastructure.Validators;
 using SimpleBilling_API.Interfaces;
 using Wolverine;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Logs;
 using SimpleBilling_API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
