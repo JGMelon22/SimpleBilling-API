@@ -487,4 +487,4 @@ $RECYCLE.BIN/
 .docker/grafana/*
 
 # Postgres Dockercompose
-data/*
+data/postgres/
