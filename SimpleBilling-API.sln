@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleBilling-API", "Simple
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleBilling-API.Tests", "SimpleBilling-API.Tests\SimpleBilling-API.Tests.csproj", "{F9DF3BBA-122E-42B8-BC9D-F46B062BA89D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleBilling-API.IntegrationTests", "SimpleBilling-API.IntegrationTests\SimpleBilling-API.IntegrationTests.csproj", "{D65D0281-77DF-4662-95FA-5C6AC371A25D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{F9DF3BBA-122E-42B8-BC9D-F46B062BA89D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9DF3BBA-122E-42B8-BC9D-F46B062BA89D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9DF3BBA-122E-42B8-BC9D-F46B062BA89D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D65D0281-77DF-4662-95FA-5C6AC371A25D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D65D0281-77DF-4662-95FA-5C6AC371A25D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D65D0281-77DF-4662-95FA-5C6AC371A25D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D65D0281-77DF-4662-95FA-5C6AC371A25D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
