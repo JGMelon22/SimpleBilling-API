@@ -19,6 +19,20 @@ public class ItemRepositoryTests : BaseIntegrationTest
     }
 
     [Fact]
+    public async Task Should_ReturnListOfItems_When_CollectionHasValues()
+    {
+        // Act
+        ServiceResponse<ICollection<ItemResponse>> result = await _repository.GetAllItemsAsync();
+
+        // Assert
+        result.Data.Should().NotBeNull();
+        result.Message.Should().BeEmpty();
+        result.Success.Should().BeTrue();
+
+        result.Data!.Count().Should().Be(10);
+    }
+
+    [Fact]
     public async Task Should_ReturnSingleItem_When_ItemIsFound()
     {
         // Arrange
@@ -116,7 +130,6 @@ public class ItemRepositoryTests : BaseIntegrationTest
     public async Task Should_ReturnOne_WhenItemToRemoveIsFound()
     {
         // Arrange
-
         // Act
         ServiceResponse<int> result = await _repository.RemoveItemAsync(7);
 
