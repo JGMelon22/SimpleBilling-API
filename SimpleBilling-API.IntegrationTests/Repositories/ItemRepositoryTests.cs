@@ -19,20 +19,6 @@ public class ItemRepositoryTests : BaseIntegrationTest
     }
 
     [Fact]
-    public async Task Should_ReturnListOfItems_When_CollectionHasValues()
-    {
-        // Act
-        ServiceResponse<ICollection<ItemResponse>> result = await _repository.GetAllItemsAsync();
-
-        // Assert
-        result.Data.Should().NotBeNull();
-        result.Message.Should().BeEmpty();
-        result.Success.Should().BeTrue();
-
-        result.Data!.Count().Should().Be(10);
-    }
-
-    [Fact]
     public async Task Should_ReturnSingleItem_When_ItemIsFound()
     {
         // Arrange
@@ -85,7 +71,7 @@ public class ItemRepositoryTests : BaseIntegrationTest
     }
 
     [Fact]
-    public async Task Should_ReturnOne_When_InserterdItemIsValid()
+    public async Task Should_ReturnOne_When_InsertedItemIsValid()
     {
         // Arrange
         ItemRequest newItem = new("GeForce GTX 1660", "NVIDIA", 250.00M, 15);
@@ -112,30 +98,29 @@ public class ItemRepositoryTests : BaseIntegrationTest
         result.Success.Should().BeTrue();
     }
 
-    // [Fact]
-    // public async Task Should_ReturnListOfItems_When_CollectionHasValues()
-    // {
-    //     // Act
-    //     ServiceResponse<ICollection<ItemResponse>> result = await _repository.GetAllItemsAsync();
-
-    //     // Assert
-    //     result.Data.Should().NotBeNull();
-    //     result.Message.Should().BeEmpty();
-    //     result.Success.Should().BeTrue();
-
-    //     result.Data!.Count().Should().Be(10);
-    // }
-
     [Fact]
     public async Task Should_ReturnOne_WhenItemToRemoveIsFound()
     {
-        // Arrange
         // Act
         ServiceResponse<int> result = await _repository.RemoveItemAsync(7);
-
+    
         // Assert
         result.Data.Should().Be(1);
         result.Message.Should().BeEmpty();
         result.Success.Should().BeTrue();
+    }
+    
+    [Fact]
+    public async Task Should_ReturnListOfItems_When_CollectionHasValues()
+    {
+        // Act
+        ServiceResponse<ICollection<ItemResponse>> result = await _repository.GetAllItemsAsync();
+    
+        // Assert
+        result.Data.Should().NotBeNull();
+        result.Message.Should().BeEmpty();
+        result.Success.Should().BeTrue();
+    
+        result.Data!.Count().Should().Be(9);
     }
 }
