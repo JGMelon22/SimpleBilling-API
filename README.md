@@ -33,6 +33,18 @@ Implemented using CQRS, Repository Pattern and the By Technical Architecture. <b
             <li>xunit.runner.visualstudio</li>
         </ul>
     </li>
+    <li>Integration Tests
+        <ul>
+            <li>coverlet.collector</li>
+            <li>FluentAssertions</li>
+            <li>Microsoft.NET.Test.Sdk</li>
+            <li>Microsoft.AspNetCore.Mvc.Testing</li>
+            <li>Testcontainers</li>
+            <li>Testcontainers.PostgreSql</li>
+            <li>xunit</li>
+            <li>xunit.runner.visualstudio</li>
+        </ul>
+    </li>
 </ul>
 
 <table style="width: 100%; text-align: center; border-spacing: 20px;">
@@ -51,3 +63,6 @@ Implemented using CQRS, Repository Pattern and the By Technical Architecture. <b
 <h3>References 📚</h3>
 <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-nswag?view=aspnetcore-8.0&tabs=visual-studio">Get started with NSwag and ASP.NET Core</a><br/>
 <a href="https://wolverinefx.net/guide/durability/marten/event-sourcing.html">Aggregate Handlers and Event Sourcing</a><br/>
+<a href="https://dev.to/wandealves/testcontainers-testes-de-integracao-em-containers-495l">Testcontainers: Testes de integração em containers</a><br/>
+<a href="https://code-maze.com/csharp-testing-using-testcontainers-for-net-and-docker/">Testing Using Testcontainers for .NET and Docker</a><br/>
+<a href="https://stackoverflow.com/questions/55131379/integration-testing-asp-net-core-with-net-framework-cant-find-deps-json">Integration testing ASP.NET Core with .NET Framework - can't find deps.json</a><br/>
