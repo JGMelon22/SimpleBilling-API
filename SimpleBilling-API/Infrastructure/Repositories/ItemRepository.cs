@@ -236,6 +236,8 @@ public class ItemRepository : IItemRepository
 
                 if (itemResult == 0)
                     throw new Exception($"Video Game with id {id} not found!");
+
+                serviceResponse.Data = itemResult;
             }
         }
         catch (Exception ex)
